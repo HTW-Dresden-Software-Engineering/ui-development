@@ -1,0 +1,31 @@
+@startuml
+class Gruppe {
+  - id: int
+  - name: String [1..50] <<not empty>>
+  - beschreibung: String [0..50]
+  --
+  + addStudierender(s: Studierender)
+  + removeStudierender(s: Studierender)
+}
+
+class Studierender {
+  - id: int
+  - vorname: String [1..50] <<not empty>>
+  - nachname: String [1..50] <<not empty>>
+  - matrikelnummer: String [1..1] <<pattern: [0-9]{7}>>
+}
+
+Gruppe "0..*" o-- "0..10" Studierender : enthält
+
+note top of Gruppe
+- name darf nicht leer sein
+- beschreibung ist optional
+- max. 10 Studierende
+- kann auch 0 Studierende enthalten
+end note
+
+note top of Studierender
+- vorname und nachname sind Pflicht
+- matrikelnummer: 7-stellig numerisch
+end note
+@enduml

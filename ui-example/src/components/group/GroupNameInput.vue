@@ -5,9 +5,9 @@
     </div>
 </template>
 <script setup lang="ts">
+import { ref } from "vue";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label";
-import { ref } from "vue";
 
 const groupName = ref('');
 </script>
