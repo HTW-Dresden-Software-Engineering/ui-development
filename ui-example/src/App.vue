@@ -3,7 +3,7 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <h1>Studierenden Management</h1>
+  <h1 class="text-4xl">Studierenden Management</h1>
   <main>
     <RouterView />
   </main>
