@@ -20,7 +20,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectValu
 
 const { name } = defineProps<{
     name: string;
-    options: Array<{ label: string; value: string }>;
+    options: Array<{ label: string; value: string | number }>;
 }>()
 
 const { value, errorMessage } = useField<string>(() => name);
