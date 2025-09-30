@@ -35,7 +35,6 @@
                                         {{ error.message }}
                                     </div>
                                 </div>
-
                             </div>
                             <Button variant="outline" size="icon" class="mt-2" type="button" @click="push('')">
                                 <Plus />
@@ -68,7 +67,7 @@ import InputFormField from "./InputFormField.vue";
 import SelectFormField from "./SelectFormField.vue";
 import InputTextArea from "./TextAreaFormField.vue";
 import { useStudentOptions } from "@/composables/useStudentOptions";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { toast } from "vue-sonner"
 
 const studentGroupSchema = z.object({
@@ -77,7 +76,7 @@ const studentGroupSchema = z.object({
     assignedStudents: z.array(z.number().min(1, "Bitte wählen Sie einen Studenten aus")).optional()
 })
 
-const { data, loading, error } = useStudentOptions()
+const { data, loading, error, loadStudents } = useStudentOptions()
 
 const saveLoading = ref(false)
 
@@ -96,6 +95,15 @@ const { handleSubmit } = useForm({
 })
 
 const { fields, push, remove } = useFieldArray<string>("assignedStudents");
+
+watch(
+    () => fields.value.length,
+    (len) => {
+        if (len > 0) loadStudents();
+    },
+    { immediate: true }
+);
+
 
 const onSubmit = handleSubmit((values) => {
     const id = toast.loading("Speichern...");

@@ -30,11 +30,14 @@ export const useStudentOptions = () => {
     }
   };
 
-  simulateApiCall();
+  const loadStudents = () => {
+    simulateApiCall();
+  };
 
   return {
     loading: readonly(loading),
     data: readonly(data),
     error: readonly(error),
+    loadStudents,
   };
 };
