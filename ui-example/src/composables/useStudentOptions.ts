@@ -19,9 +19,9 @@ export const useStudentOptions = () => {
 
       // Mock student data
       data.value = [
-        { id: 1, firstName: "John", lastName: "Doe" },
-        { id: 2, firstName: "Jane", lastName: "Smith" },
-        { id: 3, firstName: "Bob", lastName: "Johnson" },
+        { id: 1, firstName: "Jürgen", lastName: "Anke" },
+        { id: 2, firstName: "Ruben", lastName: "Kraus" },
+        { id: 3, firstName: "Progra", lastName: "Mierer" },
       ];
     } catch (err: any) {
       error.value = err;
