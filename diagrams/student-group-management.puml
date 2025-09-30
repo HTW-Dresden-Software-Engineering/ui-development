@@ -12,7 +12,7 @@ class Studierender {
   - id: int
   - vorname: String [1..50] <<not empty>>
   - nachname: String [1..50] <<not empty>>
-  - matrikelnummer: String [1..1] <<pattern: [0-9]{7}>>
+  - matrikelnummer: String [1..1] <<pattern: [0-9]{5}>>
 }
 
 Gruppe "0..*" o-- "0..10" Studierender : enthält
@@ -26,6 +26,6 @@ end note
 
 note top of Studierender
 - vorname und nachname sind Pflicht
-- matrikelnummer: 7-stellig numerisch
+- matrikelnummer: 5-stellig numerisch
 end note
 @enduml
