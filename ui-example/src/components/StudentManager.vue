@@ -1,46 +1,56 @@
 <template>
-    <div class="my-8 space-y-4">
-        <h2 class="text-2xl">Studenten Gruppe erstellen/bearbeiten</h2>
-        <Card class="max-w-3xl">
-            <CardHeader>
-                <CardTitle>Studenten Gruppe erstellen</CardTitle>
-                <CardDescription>Erstellen Sie eine neue Studenten Gruppe</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <form id="student-group-form" @submit="onSubmit" class="space-y-4 gap-x-4 grid grid-cols-1">
-                    <InputFormField name="name" label="Name" />
-                    <InputTextArea name="description" label="Beschreibung" />
-                    <div class="space-y-2">
-                        <Label for="assignedStudents">Zugeordnete Studenten</Label>
-                        <div class="grid grid-cols-2 gap-x-4 max-w-md gap-y-2">
-                            <div class="flex items-center justify-center gap-2" v-for="(student, index) in fields"
-                                :key="student.key">
-                                <template v-if="loading">
-                                    <div class="h-9 w-40  rounded-md animate-pulse bg-primary/40" />
-                                    <div class="size-9  rounded-md animate-pulse bg-primary/40" />
-                                </template>
-                                <template v-else-if="data.length > 0">
-                                    <SelectFormField v-model="student.value" :name="`assignedStudents[${index}]`"
-                                        label="Zugeordnete Studenten" :options="transFormedData" />
-                                    <Button @click="remove(index)" variant="outline" size="icon" class="ml-2"
-                                        type="button">
-                                        <X />
-                                    </Button>
-                                </template>
-                                <div v-else-if="data.length === 0" class="text-sm text-muted-foreground">Keine Studenten
-                                    verfügbar</div>
-                                <div v-else-if="error" class="text-sm text-red-500">Fehler beim Laden der Studenten:
-                                    {{ error.message }}
+    <div class="flex gap-8 items-center">
+        <div class="my-8 space-y-4">
+            <h2 class="text-2xl">Studenten Gruppe erstellen/bearbeiten</h2>
+            <Card class="w-3xl">
+                <CardHeader>
+                    <CardTitle>Studenten Gruppe erstellen</CardTitle>
+                    <CardDescription>Erstellen Sie eine neue Studenten Gruppe</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form id="student-group-form" @submit="onSubmit" class="space-y-4 gap-x-4 grid grid-cols-1">
+                        <InputFormField name="name" label="Name" />
+                        <InputTextArea name="description" label="Beschreibung" />
+                        <div class="space-y-2">
+                            <Label for="assignedStudents">Zugeordnete Studenten</Label>
+                            <div class="grid grid-cols-2 gap-x-4 max-w-md gap-y-2">
+                                <div class="flex items-center justify-center gap-2" v-for="(student, index) in fields"
+                                    :key="student.key">
+                                    <template v-if="loading">
+                                        <div class="h-9 w-40  rounded-md animate-pulse bg-primary/40" />
+                                        <div class="size-9  rounded-md animate-pulse bg-primary/40" />
+                                    </template>
+                                    <template v-else-if="data.length > 0">
+                                        <SelectFormField v-model="student.value" :name="`assignedStudents[${index}]`"
+                                            label="Zugeordnete Studenten" :options="transFormedData" />
+                                        <Button @click="remove(index)" variant="outline" size="icon" class="ml-2"
+                                            type="button">
+                                            <X />
+                                        </Button>
+                                    </template>
+                                    <div v-else-if="data.length === 0" class="text-sm text-muted-foreground">Keine
+                                        Studenten
+                                        verfügbar</div>
+                                    <div v-else-if="error" class="text-sm text-red-500">Fehler beim Laden der Studenten:
+                                        {{ error.message }}
+                                    </div>
                                 </div>
-                            </div>
 
+                            </div>
+                            <Button variant="outline" size="icon" class="mt-2" type="button" @click="push('')">
+                                <Plus />
+                            </Button>
                         </div>
-                        <Button variant="outline" size="icon" class="mt-2" type="button" @click="push('')">
-                            <Plus />
-                        </Button>
-                    </div>
-                    <Button type="submit">Speichern</Button>
-                </form>
+                        <Button type="submit">Speichern</Button>
+                    </form>
+                </CardContent>
+            </Card>
+        </div>
+        <div class="bg-muted-foreground w-[0.15rem] h-[400px] rounded-full" />
+        <Card class="h-[500px]">
+            <CardContent class="space-y-4 p-6">
+                <p class="text-muted-foreground">Placeholder for student groups list</p>
+                <div v-for="_ in 8" class="h-8 w-full animate-pulse bg-primary/20 rounded-md"></div>
             </CardContent>
         </Card>
     </div>
