@@ -1,17 +1,16 @@
 <template>
     <div class="my-8 space-y-4">
         <h2 class="text-2xl">Studenten Gruppe erstellen/bearbeiten</h2>
-        <Card>
+        <Card class="max-w-3xl">
             <CardHeader>
                 <CardTitle>Studenten Gruppe erstellen</CardTitle>
                 <CardDescription>Erstellen Sie eine neue Studenten Gruppe</CardDescription>
             </CardHeader>
             <CardContent>
-                <form id="student-group-form" @submit="onSubmit"
-                    class="space-y-4 gap-x-4 grid grid-cols-1 md:grid-cols-2">
+                <form id="student-group-form" @submit="onSubmit" class="space-y-4 gap-x-4 grid grid-cols-1">
                     <InputFormField name="name" label="Name" />
-                    <InputFormField name="description" label="Beschreibung" />
-                    <div class="col-span-1 md:col-span-2 space-y-2">
+                    <InputTextArea name="description" label="Beschreibung" />
+                    <div class="space-y-2">
                         <Label for="assignedStudents">Zugeordnete Studenten</Label>
                         <div class="grid grid-cols-2 gap-x-4 max-w-md gap-y-2">
                             <div class="flex items-center justify-center gap-2" v-for="(student, index) in fields"
@@ -57,13 +56,14 @@ import { z } from "zod";
 import { X, Plus } from "lucide-vue-next";
 import InputFormField from "./InputFormField.vue";
 import SelectFormField from "./SelectFormField.vue";
+import InputTextArea from "./TextAreaFormField.vue";
 import { useStudentOptions } from "@/composables/useStudentOptions";
 import { computed } from "vue";
 
 const studentGroupSchema = z.object({
     name: z.string().min(1, "Name ist erforderlich").max(50, "Name darf maximal 50 Zeichen haben"),
     description: z.string().max(50, "Beschreibung darf maximal 50 Zeichen haben").optional(),
-    assignedStudents: z.array(z.string().min(1, "Bitte wählen Sie einen Studenten aus")).optional()
+    assignedStudents: z.array(z.number().min(1, "Bitte wählen Sie einen Studenten aus")).optional()
 })
 
 const { data, loading, error } = useStudentOptions()
@@ -87,4 +87,5 @@ const { fields, push, remove } = useFieldArray<string>("assignedStudents");
 const onSubmit = handleSubmit((values) => {
     console.log(values);
 })
+
 </script>
