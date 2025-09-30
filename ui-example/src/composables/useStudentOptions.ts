@@ -7,7 +7,7 @@ interface Student {
 }
 
 export const useStudentOptions = () => {
-  const loading = ref(true);
+  const loading = ref(false);
   const data = ref<Student[]>([]);
   const error = ref<any>(null);
 
@@ -17,7 +17,6 @@ export const useStudentOptions = () => {
       error.value = null;
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // Mock student data
       data.value = [
         { id: 1, firstName: "Jürgen", lastName: "Anke" },
         { id: 2, firstName: "Ruben", lastName: "Kraus" },
@@ -31,7 +30,7 @@ export const useStudentOptions = () => {
   };
 
   const loadStudents = () => {
-    simulateApiCall();
+    if (data.value.length === 0 && !loading.value) simulateApiCall();
   };
 
   return {
