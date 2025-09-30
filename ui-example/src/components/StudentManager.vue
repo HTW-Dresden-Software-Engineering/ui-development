@@ -41,7 +41,7 @@
                                 <Plus />
                             </Button>
                         </div>
-                        <Button type="submit">Speichern</Button>
+                        <Button :disabled="saveLoading" type="submit">Speichern</Button>
                     </form>
                 </CardContent>
             </Card>
@@ -68,7 +68,8 @@ import InputFormField from "./InputFormField.vue";
 import SelectFormField from "./SelectFormField.vue";
 import InputTextArea from "./TextAreaFormField.vue";
 import { useStudentOptions } from "@/composables/useStudentOptions";
-import { computed } from "vue";
+import { computed, ref } from "vue";
+import { toast } from "vue-sonner"
 
 const studentGroupSchema = z.object({
     name: z.string().min(1, "Name ist erforderlich").max(50, "Name darf maximal 50 Zeichen haben"),
@@ -77,6 +78,8 @@ const studentGroupSchema = z.object({
 })
 
 const { data, loading, error } = useStudentOptions()
+
+const saveLoading = ref(false)
 
 const transFormedData = computed(() => data.value?.map(student => ({
     label: `${student.firstName} ${student.lastName}`,
@@ -95,7 +98,13 @@ const { handleSubmit } = useForm({
 const { fields, push, remove } = useFieldArray<string>("assignedStudents");
 
 const onSubmit = handleSubmit((values) => {
-    console.log(values);
+    const id = toast.loading("Speichern...");
+    saveLoading.value = true
+    setTimeout(() => {
+        console.log("Form Values:", values);
+        toast.success("Erfolgreich gespeichert", { id, description: `Die Gruppe "${values.name}" wurde erfolgreich gespeichert.` });
+        saveLoading.value = false
+    }, 2000);
 })
 
 </script>
